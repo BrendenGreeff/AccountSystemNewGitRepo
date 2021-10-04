@@ -15,9 +15,11 @@ public class GeneralResponse<S> {
 
     }
     public boolean getSuccessful() {
+
         return successful;
     }
     public String getPayload() {
+
         return payload;
     }
 
