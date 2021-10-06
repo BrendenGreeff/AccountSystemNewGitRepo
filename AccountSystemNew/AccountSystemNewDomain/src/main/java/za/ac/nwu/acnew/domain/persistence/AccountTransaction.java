@@ -9,7 +9,7 @@ import java.util.Objects;
         @Index(name = "FK_Member_ID_idx", columnList = "Member_ID")
 })
 @Entity
-public class AccountTransaction {
+public class AccountTransaction{
 
     private Integer id;
     private Member member;
@@ -36,14 +36,14 @@ public class AccountTransaction {
         return id;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Member_ID")
     public Member getMember() {
 
         return member;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Account_Type_ID")
     public AccountType getAccountType() {
 

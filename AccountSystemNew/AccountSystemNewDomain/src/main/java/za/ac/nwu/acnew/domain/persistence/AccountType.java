@@ -3,6 +3,7 @@ package za.ac.nwu.acnew.domain.persistence;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 @Table(name = "account_types")
 @Entity
@@ -11,6 +12,8 @@ public class AccountType {
     private Integer id;
     private String accountType;
     private LocalDate accountCreationDate;
+
+    private Set<AccountTransaction> accountTransactions;
 
     public AccountType() {
     }
@@ -38,6 +41,15 @@ public class AccountType {
     @Column(name = "Account_Creation_Date", nullable = false)
     public LocalDate getAccountCreationDate() {
         return accountCreationDate;
+    }
+
+    @OneToMany(targetEntity = AccountTransaction.class, fetch = FetchType.LAZY, mappedBy = "accountType", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    public Set<AccountTransaction> getAccountTransaction(){
+        return accountTransactions;
+    }
+
+    public void setAccountTransaction(Set<AccountTransaction> accountTransactions){
+        this.accountTransactions = accountTransactions;
     }
 
     public void setAccountCreationDate(LocalDate accountCreationDate) {
