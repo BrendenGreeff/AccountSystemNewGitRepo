@@ -1,10 +1,14 @@
 package za.ac.nwu.acnew.domain.persistence;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
-
+@ApiModel(value = "AccountType", description = "Represents the account type")
 @Table(name = "account_types")
 @Entity
 public class AccountType {
@@ -24,6 +28,7 @@ public class AccountType {
     }
 
     public AccountType(AccountType accountType) {
+        this.setId(accountType.getId());
         this.setAccountType(accountType.getAccountType());
         this.setAccountCreationDate(accountType.getAccountCreationDate());
     }
@@ -31,19 +36,44 @@ public class AccountType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Account_Types_ID", nullable = false)
+    @ApiModelProperty(position = 1,
+            value = "Account Type ID",
+            name =  "ID",
+            notes = "Uniquely identifies the account type",
+            dataType = "java.lang.String",
+            example = "1",
+            required = true
+    )
     public Integer getId() {
 
         return id;
     }
 
     @Column(name = "Account_Type", nullable = false, length = 45)
+    @ApiModelProperty(position = 2,
+            value = "Account Type Name",
+            name =  "Name",
+            notes = "Identifies the account type",
+            dataType = "java.lang.String",
+            example = "Miles",
+            required = true
+    )
     public String getAccountType() {
 
         return accountType;
     }
 
     @Column(name = "Account_Creation_Date", nullable = false)
+    @ApiModelProperty(position = 3,
+            value = "AccountType Creation Date",
+            name =  "accountCreationDate",
+            notes = "Date on which account type was created",
+            dataType = "java.lang.String",
+            example = "2021-02-01",
+            allowEmptyValue = true
+    )
     public LocalDate getAccountCreationDate() {
+
         return accountCreationDate;
     }
 
@@ -78,6 +108,11 @@ public class AccountType {
         AccountType that = (AccountType) o;
         return Objects.equals(id, that.id) && Objects.equals(accountType, that.accountType) && Objects.equals(accountCreationDate, that.accountCreationDate);
     }
+
+    /* @JsonIgnore
+    public AccountType getAccountType(){
+        return new AccountType(getId(), getAccountType(), getAccountCreationDate());
+    }*/
 
     @Override
     public int hashCode() {
