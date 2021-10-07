@@ -6,23 +6,23 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import za.ac.nwu.acnew.domain.persistence.AccountType;
 import za.ac.nwu.acnew.domain.service.GeneralResponse;
 import za.ac.nwu.acnew.logic.flow.FetchAccountTypeFlow;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("account-type")
+@RequestMapping("AccountType")
 public class AccountTypeController {
 
-    /* private final FetchAccountTypeFlow fetchAccountTypeFlow;
+    private final FetchAccountTypeFlow fetchAccountTypeFlow;
 
     @Autowired
     public AccountTypeController(FetchAccountTypeFlow fetchAccountTypeFlow){
         this.fetchAccountTypeFlow = fetchAccountTypeFlow;
-    } */
+    }
 
     @GetMapping("/all")
     @ApiOperation(value = "Gets all the configured Account types", notes = "Returns a list of Account types")
@@ -30,18 +30,13 @@ public class AccountTypeController {
             @ApiResponse(code = 200, message = "Account type was returned", response = GeneralResponse.class),
             @ApiResponse(code = 400, message = "Bad Request", response = GeneralResponse.class),
             @ApiResponse(code = 404, message = "Not found", response = GeneralResponse.class),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = GeneralResponse.class)})
+            @ApiResponse(code = 500, message = "Internal Server Error", response = GeneralResponse.class)
+    })
 
-    public ResponseEntity<GeneralResponse<String>> getAll(){
-        GeneralResponse<String> response = new GeneralResponse<> (true, "No types found");
+    public ResponseEntity<GeneralResponse<List<AccountType>>> getAll(){
+        List<AccountType> accountTypes = fetchAccountTypeFlow.getAllAccountTypes();
+        GeneralResponse<List<AccountType>> response = new GeneralResponse<>(true, accountTypes);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //public GeneralResponse<String> getAll(){return new GeneralResponse<String>(true, "No types found");}
-
-    /*public ResponseEntity<GeneralResponse<List<AccountTypeDto>>> getAll(){
-        List<AccountTypeDto> accountTypes = fetchAccountTypeFlow.getAllAccountTypes();
-        GeneralResponse<List<AccountTypeDto>> response = new generalResponse<>(true, acountType);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    } */
 }

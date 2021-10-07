@@ -1,8 +1,9 @@
-package za.ac.nwu.acnew.logic.flow;
+package za.ac.nwu.acnew.translator;
 
 import za.ac.nwu.acnew.domain.persistence.AccountType;
+
 import java.util.List;
 
-public interface FetchAccountTypeFlow{
+public interface AccountTypeTranslator {
     List<AccountType> getAllAccountTypes();
 }
